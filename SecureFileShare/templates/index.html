@@ -1,0 +1,79 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Secure File Share</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .alert { padding: 10px; margin-top: 10px; border-radius: 5px; }
+        .alert.error { background-color: #ffe0e0; color: #d60000; border: 1px solid #d60000; }
+        .alert.success { background-color: #e0ffe0; color: #008000; border: 1px solid #008000; }
+    </style>
+</head>
+<body>
+    <h2>🔒 Secure File Share</h2>
+
+    <h3>Upload File</h3>
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+
+    Show flash messages -->
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h3>⬇ Download Files</h3>
+    <ul>
+        {% for file in files %}
+            <li>{{ file }} - <a href="{{ url_for('download', filename=file) }}">Download</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+ -->
+ 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure File Share</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>🔒 Secure File Share</h1>
+
+    <!-- Show flashed messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color: green; font-weight: bold;">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h2>Upload File</h2>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h3>⬇ Download File</h3>
+    <form method="POST" action="{{ url_for('download') }}">
+        <label>Enter filename:</label>
+        <select name="filename">
+            {% for f in files %}
+              <option value="{{ f }}">{{ f }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Download">
+    </form>
+</body>
+</html>
